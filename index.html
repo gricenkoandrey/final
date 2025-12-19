@@ -34,10 +34,20 @@
 
         .logo { width: 220px; margin: 10px 0; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
-        /* СТИЛИ ДЛЯ ШЕЛЛИ И ОБЛАКА ТЕКСТА */
+        /* АНИМАЦИЯ ВОЛНЫ (ВВЕРХ-ВНИЗ) ДЛЯ ШЕЛЛИ */
+        @keyframes shellyFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); } /* Поднимается вверх */
+            100% { transform: translateY(0px); }
+        }
+
         .shelly-container {
-            display: flex; align-items: center; width: 100%; max-width: 450px;
-            margin-bottom: 20px; animation: fadeIn 0.5s ease;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease, shellyFloat 3s ease-in-out infinite; /* Применяем анимацию волны */
         }
 
         .shelly-avatar {
@@ -166,8 +176,7 @@
 
         <div id="step-ready" style="display:none;">
             <div class="account-ready">
-                <div id="reward-display">
-                    </div>
+                <div id="reward-display"></div>
                 <div class="ready-tag" id="display-tag">#TAG</div>
                 <div style="font-size: 14px; opacity: 0.7;">Account Synced Successfully</div>
             </div>
@@ -231,7 +240,6 @@
         document.getElementById('step-ready').style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
         
-        // ВСТАВЛЯЕМ КАРТИНКУ ВЫБРАННЫХ ГЕМОВ
         const rewardDiv = document.getElementById('reward-display');
         rewardDiv.innerHTML = `<img src="https://brawlergems.com/generator/images/${selectedGems}.png" style="width:100px; filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5)); margin-bottom: 10px;">`;
 
